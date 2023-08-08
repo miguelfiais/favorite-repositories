@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { FaPlus, FaSpinner } from 'react-icons/fa'
+import List from './List'
 
 interface ResponseApiProps {
   full_name: string
@@ -43,27 +44,31 @@ const Form = () => {
   )
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 flex gap-2">
-      <input
-        type="text"
-        placeholder="Adicionar Repositórios"
-        className="flex-1 border rounded py-2 px-3 text-base outline-none"
-        value={newRepo}
-        onChange={handleInputChange}
-      />
-      <button
-        type="submit"
-        className={`bg-blue-950 rounded px-3 flex items-center justify-center ${
-          loading && 'opacity-50 cursor-not-allowed'
-        }`}
-      >
-        {loading ? (
-          <FaSpinner className="animate-spin" color="#fff" size={14} />
-        ) : (
-          <FaPlus color="#fff" size={14} />
-        )}
-      </button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit} className="mt-8 flex gap-2">
+        <input
+          type="text"
+          placeholder="Adicionar Repositórios"
+          className="flex-1 border rounded py-2 px-3 text-base outline-none"
+          value={newRepo}
+          required
+          onChange={handleInputChange}
+        />
+        <button
+          type="submit"
+          className={`bg-blue-950 rounded px-3 flex items-center justify-center ${
+            loading && 'opacity-50 cursor-not-allowed'
+          }`}
+        >
+          {loading ? (
+            <FaSpinner className="animate-spin" color="#fff" size={14} />
+          ) : (
+            <FaPlus color="#fff" size={14} />
+          )}
+        </button>
+      </form>
+      <List repositories={repositories} setRepositories={setRepositories} />
+    </>
   )
 }
 
