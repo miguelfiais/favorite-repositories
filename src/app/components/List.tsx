@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Dispatch, SetStateAction, useCallback, useEffect } from 'react'
 import { FaBars, FaTrash } from 'react-icons/fa'
 
@@ -51,9 +52,12 @@ const List = ({ repositories, setRepositories }: ListProps) => {
             </button>
             {repo.full_name}
           </span>
-          <a className="text-blue-950">
+          <Link
+            href={`/repository/${encodeURIComponent(repo.full_name)}`}
+            className="text-blue-950"
+          >
             <FaBars size={20} />
-          </a>
+          </Link>
         </li>
       ))}
     </ul>
