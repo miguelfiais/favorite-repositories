@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback } from 'react'
+import { Dispatch, SetStateAction, useCallback, useEffect } from 'react'
 import { FaBars, FaTrash } from 'react-icons/fa'
 
 interface ResponseApiProps {
@@ -18,6 +18,20 @@ const List = ({ repositories, setRepositories }: ListProps) => {
     },
     [repositories, setRepositories]
   )
+
+  //Buscar no localStorage
+  useEffect(() => {
+    const repositoriesInLocalStorage: string | null =
+      localStorage.getItem('repos')
+    if (repositoriesInLocalStorage) {
+      setRepositories(JSON.parse(repositoriesInLocalStorage))
+    }
+  }, [setRepositories])
+
+  //Salvar no localStorage
+  useEffect(() => {
+    localStorage.setItem('repos', JSON.stringify(repositories))
+  }, [repositories])
 
   return (
     <ul className="mt-5">
