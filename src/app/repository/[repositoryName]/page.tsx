@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaArrowLeft } from 'react-icons/fa'
+import ListIssues from '../components/ListIssues'
 
 interface ResponseDataProps {
   full_name: string
@@ -11,7 +12,7 @@ interface ResponseDataProps {
   name: string
   description: string
 }
-interface ResponseIssuesProps {
+export interface ResponseIssuesProps {
   id: Number
   user: {
     avatar_url: string
@@ -71,43 +72,10 @@ const Repository = async ({
           {responseData.description}
         </p>
       </div>
-      <div>
-        <ul className="mt-8 pt-8 border">
-          {responseIssues.map((issue) => (
-            <li
-              key={String(issue.id)}
-              className="flex items-center py-4 px-2 mb-3"
-            >
-              <Image
-                src={issue.user.avatar_url}
-                alt={issue.user.login}
-                width={36}
-                height={36}
-                className="rounded-full border-2 border-blue-950"
-              />
-              <div className="flex-1 ml-3">
-                <strong className="text-sm">
-                  <a
-                    href={issue.html_url}
-                    className="text-gray-700 hover:text-blue-500"
-                  >
-                    {issue.title}
-                  </a>
-                  {issue.labels.map((label) => (
-                    <span
-                      key={String(label.id)}
-                      className="bg-gray-700 text-white rounded text-xs py-1 px-2 ml-2"
-                    >
-                      {label.name}
-                    </span>
-                  ))}
-                </strong>
-                <p className="mt-2 text-xs">{issue.user.login}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ListIssues
+        responseIssues={responseIssues}
+        repositoryName={decodeURIComponent(params.repositoryName)}
+      />
     </div>
   )
 }
